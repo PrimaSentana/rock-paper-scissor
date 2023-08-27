@@ -7,10 +7,8 @@ const play = document.querySelector('.play-btn');
 //other
 const result = document.querySelector('.result');
 const scoreDisplay = document.querySelector('.score-display');
-
-//new node
-const playerScore = document.createElement('h3');
-const computerScore = document.createElement('h3');
+const playerDisplay = document.querySelector('.player-point');
+const computerDisplay = document.querySelector('.computer-point')
 
 
 let getComputerChoice = () => {
@@ -29,7 +27,7 @@ let getComputerChoice = () => {
 
 let playerPoint = 0;
 let computerPoint = 0;
-let playerSelection = '';
+
 
 let playRound = () => {    
     let computerSelection = getComputerChoice();
@@ -65,39 +63,28 @@ let playRound = () => {
         playerPoint += 1;
     } 
     else if (playerSelection === 'scissor' && computerSelection === 'scissor') {
-        result.textContent = `${playerSelection} + ${computerSelection} = Draw!`
+        result.textContent = `${playerSelection} + ${computerSelection} = Draw!`;
     } 
     else {
         result.textContent = "Invalid Input (Refresh Game!)";
     }
+
+    playerDisplay.textContent = `player   : ${playerPoint}`;
+    computerDisplay.textContent = `computer : ${computerPoint}`;
 }
 
-let start = () => {
-    for(let i = 1; i <= 5; i++) {
-        
-        rock.addEventListener('click', () => {
-            playerSelection = 'rock';
-            return playerSelection;
-        }),
-           
-        paper.addEventListener('click', () => {
-           playerSelection = 'paper';
-           return playerSelection;
-        }),
-           
-        scissor.addEventListener('click', () => {
-           playerSelection = 'scissor';
-           return playerSelection;
-        })
+rock.addEventListener('click', () => {
+    playerSelection = 'rock';
+    playRound();
+})
+   
+paper.addEventListener('click', () => {
+    playerSelection = 'paper';
+    playRound();
+})
+   
+scissor.addEventListener('click', () => {
+    playerSelection = 'scissor';
+    playRound();
+})
 
-        playRound();
-    }
-
-    scoreDisplay.appendChild(playerScore);
-    playerScore.textContent = playerPoint;
-    scoreDisplay.appendChild(computerScore);
-    computerScore.textContent = computerPoint;
-    
-}
-
-play.addEventListener('click', start);
