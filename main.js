@@ -1,98 +1,103 @@
-let getComputerChoice = function() {
+// button
+const rock = document.querySelector('.r-btn');
+const paper = document.querySelector('.p-btn');
+const scissor = document.querySelector('.s-btn');
+const play = document.querySelector('.play-btn');
+
+//other
+const result = document.querySelector('.result');
+const scoreDisplay = document.querySelector('.score-display');
+
+//new node
+const playerScore = document.createElement('h3');
+const computerScore = document.createElement('h3');
+
+
+let getComputerChoice = () => {
     let computerChoice = '';
     let randomChoice = Math.floor(Math.random() * 75 + 1);
-    if (randomChoice <= 25) {
-        computerChoice = "rock";
+    if (randomChoice < 25) {
+        computerChoice = 'rock';
     } else if (randomChoice <= 50) {
-        computerChoice = "paper";
-    } else if (randomChoice > 50) {
-        computerChoice = "scissor";
+        computerChoice = 'paper';
     } else {
-        console.log("invalid number choosed");
+        computerChoice = 'scissor';
     }
 
     return computerChoice;
 }
 
-// point manage
 let playerPoint = 0;
 let computerPoint = 0;
+let playerSelection = '';
 
-function playRound() {
-    let inputChoice = prompt("Enter your choice");
-    let playerSelection = inputChoice.toLowerCase();
-
+let playRound = () => {    
     let computerSelection = getComputerChoice();
-
+    
     if (playerSelection === 'rock' && computerSelection === 'rock') {
-        console.log(`${playerSelection} + ${computerSelection} = Draw!`);
+        result.textContent = `${playerSelection} + ${computerSelection} = Draw!`;
     } 
     else if (playerSelection === 'rock' && computerSelection === 'paper') {
-        console.log(`${playerSelection} + ${computerSelection} = You lose!`);
+        result.textContent = `${playerSelection} + ${computerSelection} = You lose!`;
         computerPoint += 1;
     } 
     else if (playerSelection === 'rock' && computerSelection === 'scissor') {
-        console.log(`${playerSelection} + ${computerSelection} = You Win!`);
+        result.textContent = `${playerSelection} + ${computerSelection} = You Win!`;
         playerPoint += 1;
     } 
     else if (playerSelection === 'paper' && computerSelection === 'rock') {
-        console.log(`${playerSelection} + ${computerSelection} = You Win!`);
+        result.textContent = `${playerSelection} + ${computerSelection} = You Win!`;
         playerPoint += 1;
     } 
     else if (playerSelection === 'paper' && computerSelection === 'paper') {
-        console.log(`${playerSelection} + ${computerSelection} = Draw!`);
+        result.textContent = `${playerSelection} + ${computerSelection} = Draw!`;
     } 
     else if (playerSelection === 'paper' && computerSelection === 'scissor') {
-        console.log(`${playerSelection} + ${computerSelection} = You Lose!`);
+        result.textContent = `${playerSelection} + ${computerSelection} = You Lose!`;
         computerPoint += 1;
     } 
     else if (playerSelection === 'scissor' && computerSelection === 'rock') {
-        console.log(`${playerSelection} + ${computerSelection} = You Lose!`);
+        result.textContent = `${playerSelection} + ${computerSelection} = You Lose!`;
         computerPoint += 1;
     } 
     else if (playerSelection === 'scissor' && computerSelection === 'paper') {
-        console.log(`${playerSelection} + ${computerSelection} = You Win!`);
+        result.textContent = `${playerSelection} + ${computerSelection} = You Win!`;
         playerPoint += 1;
     } 
     else if (playerSelection === 'scissor' && computerSelection === 'scissor') {
-        console.log(`${playerSelection} + ${computerSelection} = Draw!`)
+        result.textContent = `${playerSelection} + ${computerSelection} = Draw!`
     } 
     else {
-        console.log("Invalid Input (Refresh Game!)");
+        result.textContent = "Invalid Input (Refresh Game!)";
     }
 }
 
-function play() {
-    for (let i = 1; i <= 5; i++){
-        playRound(getComputerChoice());
+let start = () => {
+    for(let i = 1; i <= 5; i++) {
+        
+        rock.addEventListener('click', () => {
+            playerSelection = 'rock';
+            return playerSelection;
+        }),
+           
+        paper.addEventListener('click', () => {
+           playerSelection = 'paper';
+           return playerSelection;
+        }),
+           
+        scissor.addEventListener('click', () => {
+           playerSelection = 'scissor';
+           return playerSelection;
+        })
+
+        playRound();
     }
 
-    console.log(`player   : ${playerPoint}`);
-    console.log(`computer : ${computerPoint}`);
-
-    if (playerPoint > computerPoint) {
-        console.log("VICTORY !!!");
-    } else if (playerPoint === computerPoint) {
-        console.log("Too Bad Draw...");
-    } else {
-        console.log("You Lose ! :(((((")
-    }
+    scoreDisplay.appendChild(playerScore);
+    playerScore.textContent = playerPoint;
+    scoreDisplay.appendChild(computerScore);
+    computerScore.textContent = computerPoint;
     
-    restartGame();
 }
 
-function restartGame() {
-    let inputPLayAgain = prompt("Play Again? (y to continue)");
-    let playAgain = inputPLayAgain.toLowerCase;
-
-    if (playAgain === 'y') {
-        play();
-    } else {
-        console.log("Okay then!")
-    }
-}
-
-// start game//
-//play();
-
-
+play.addEventListener('click', start);
